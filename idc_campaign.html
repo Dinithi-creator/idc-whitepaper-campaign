@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDC Global Whitepaper Campaign</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --bg:#080810;--bg2:#0e0e1a;--bg3:#13131f;--card:#16162a;--card2:#1c1c30;
+    --purple:#7c3aed;--purple2:#9d5cf6;--purple3:#c4b5fd;--accent:#a78bfa;
+    --text:#f1f0ff;--muted:#9ca3c4;--border:#2a2a45;--glow:rgba(124,58,237,0.15);
+  }
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;font-size:14px;line-height:1.6}
+
+  /* NAV */
+  nav{position:sticky;top:0;z-index:100;background:rgba(8,8,16,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem}
+  .nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;gap:0;overflow-x:auto}
+  .nav-logo{font-size:12px;font-weight:700;color:var(--purple3);white-space:nowrap;padding:1rem 1.5rem 1rem 0;border-right:1px solid var(--border);margin-right:1rem;letter-spacing:.05em}
+  nav a{color:var(--muted);text-decoration:none;font-size:11.5px;font-weight:500;padding:.9rem .7rem;white-space:nowrap;letter-spacing:.04em;transition:color .2s;border-bottom:2px solid transparent}
+  nav a:hover{color:var(--purple3)}
+  .nav-inner::-webkit-scrollbar{height:0}
+
+  /* LAYOUT */
+  .wrap{max-width:1200px;margin:0 auto;padding:0 2rem}
+  section{padding:4.5rem 0 3rem}
+  section+section{border-top:1px solid var(--border)}
+
+  /* EYEBROW / HEADINGS */
+  .eyebrow{font-size:11px;font-weight:700;letter-spacing:.14em;color:var(--purple2);text-transform:uppercase;margin-bottom:.5rem}
+  h1{font-size:clamp(2rem,4vw,3rem);font-weight:800;letter-spacing:-.02em;line-height:1.1;color:var(--text)}
+  h2.section-title{font-size:1.5rem;font-weight:700;color:var(--text);letter-spacing:-.01em}
+  .section-sub{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--purple2);margin-bottom:1.5rem}
+
+  /* KPI TILES */
+  .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin:2rem 0}
+  .kpi-tile{background:linear-gradient(135deg,var(--card),var(--card2));border:1px solid var(--border);border-radius:12px;padding:1.4rem 1.2rem;position:relative;overflow:hidden}
+  .kpi-tile::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--glow),transparent);opacity:.6}
+  .kpi-val{font-size:1.8rem;font-weight:800;color:var(--purple3);line-height:1;display:block;position:relative}
+  .kpi-label{font-size:11px;color:var(--muted);margin-top:.4rem;letter-spacing:.04em;position:relative}
+
+  /* CARDS */
+  .card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.2rem;margin-top:1.5rem}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.6rem;transition:border-color .2s}
+  .card:hover{border-color:var(--purple)}
+  .card-tag{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--purple2);margin-bottom:.6rem}
+  .card h3{font-size:1rem;font-weight:700;color:var(--text);margin-bottom:.7rem}
+  .card p{font-size:13px;color:var(--muted);line-height:1.65}
+
+  /* HERO BODY */
+  .hero-body{font-size:15px;color:var(--muted);max-width:760px;line-height:1.75;margin:1.5rem 0}
+
+  /* TABLE */
+  .tbl-wrap{overflow-x:auto;margin-top:1.5rem;border-radius:12px;border:1px solid var(--border)}
+  table{width:100%;border-collapse:collapse;background:var(--card)}
+  thead tr{background:var(--card2)}
+  th{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--purple3);padding:.9rem 1rem;text-align:left;border-bottom:1px solid var(--border)}
+  td{font-size:12.5px;color:var(--muted);padding:.85rem 1rem;border-bottom:1px solid rgba(42,42,69,.5);vertical-align:top}
+  td:first-child{color:var(--text);font-weight:500}
+  tr:last-child td{border-bottom:none}
+  .kpi-pill{display:inline-block;background:rgba(124,58,237,.18);color:var(--purple3);border-radius:99px;padding:.15rem .65rem;font-size:11px;font-weight:600;white-space:nowrap}
+
+  /* CALENDAR */
+  .cal-list{display:flex;flex-direction:column;gap:.6rem;margin-top:1.5rem}
+  .cal-row{display:grid;grid-template-columns:120px 1fr auto;gap:1rem;align-items:start;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;transition:border-color .2s}
+  .cal-row:hover{border-color:var(--purple)}
+  .cal-date{font-size:11px;font-weight:700;color:var(--purple2);letter-spacing:.04em;padding-top:.1rem}
+  .cal-title{font-size:13px;color:var(--text);font-weight:600;margin-bottom:.2rem}
+  .cal-desc{font-size:12px;color:var(--muted)}
+  .cal-channel{font-size:11px;color:var(--accent);font-weight:600;white-space:nowrap;padding-top:.15rem}
+
+  /* FUNNEL */
+  .funnel-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.2rem;margin-top:1.5rem}
+  .funnel-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.6rem;border-top:3px solid var(--purple)}
+  .funnel-stage{font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--purple3);margin-bottom:.3rem}
+  .funnel-title{font-size:1rem;font-weight:700;color:var(--text);margin-bottom:.3rem}
+  .funnel-sub{font-size:12px;color:var(--muted);margin-bottom:1rem;font-style:italic}
+  .funnel-card ul{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+  .funnel-card li{font-size:12.5px;color:var(--muted);padding-left:1.1rem;position:relative}
+  .funnel-card li::before{content:'→';position:absolute;left:0;color:var(--purple2);font-size:11px}
+
+  /* METRICS */
+  .metric-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.2rem;margin-top:1.5rem}
+  .metric-group{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.4rem}
+  .metric-group-title{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--purple2);margin-bottom:1rem;padding-bottom:.6rem;border-bottom:1px solid var(--border)}
+  .metric-row{display:flex;justify-content:space-between;align-items:center;padding:.45rem 0;border-bottom:1px solid rgba(42,42,69,.4)}
+  .metric-row:last-child{border-bottom:none}
+  .metric-name{font-size:12.5px;color:var(--text)}
+  .metric-note{font-size:11px;color:var(--muted)}
+  .metric-goal{font-size:11px;font-weight:700;color:var(--purple3);background:rgba(124,58,237,.15);padding:.15rem .6rem;border-radius:99px;white-space:nowrap}
+
+  /* AUDIENCE */
+  .aud-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.2rem;margin-top:1.5rem}
+  .aud-block{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.4rem}
+  .aud-block h4{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--purple2);margin-bottom:.8rem}
+  .aud-block ul{list-style:none;display:flex;flex-direction:column;gap:.3rem}
+  .aud-block li{font-size:12.5px;color:var(--muted);padding-left:1rem;position:relative}
+  .aud-block li::before{content:'·';position:absolute;left:0;color:var(--purple2);font-weight:900}
+  .aud-block p{font-size:13px;color:var(--text);font-weight:600}
+
+  /* MSG */
+  .msg-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.2rem;margin-top:1.5rem}
+  .msg-card{background:linear-gradient(135deg,var(--card),var(--card2));border:1px solid var(--border);border-radius:12px;padding:1.6rem;border-left:3px solid var(--purple)}
+  .msg-num{font-size:11px;font-weight:800;letter-spacing:.1em;color:var(--purple2);text-transform:uppercase;margin-bottom:.4rem}
+  .msg-label{font-size:13px;font-weight:700;color:var(--text);margin-bottom:.7rem}
+  .msg-card p{font-size:13px;color:var(--muted);line-height:1.65}
+
+  /* ASSET HUB */
+  .asset-header{background:linear-gradient(135deg,var(--card2),var(--card));border:1px solid var(--border);border-radius:12px;padding:1.6rem;margin-top:1.5rem;margin-bottom:1.2rem}
+  .asset-header h3{font-size:14px;font-weight:700;color:var(--text);margin-bottom:.4rem}
+  .asset-header p{font-size:13px;color:var(--muted)}
+  .cta-line{font-size:13px;color:var(--purple3);font-weight:600;margin-top:.6rem}
+  .hero-copy{margin-top:1rem}
+  .hero-copy p{font-size:12.5px;color:var(--muted);margin-top:.3rem}
+  .repo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
+  .repo-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.4rem;transition:border-color .2s}
+  .repo-card:hover{border-color:var(--purple)}
+  .repo-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:.3rem}
+  .repo-desc{font-size:12px;color:var(--muted);margin-bottom:.7rem}
+  .repo-usage{font-size:11px;color:var(--accent);margin-bottom:.6rem;font-style:italic}
+  .repo-link{display:inline-flex;align-items:center;gap:.4rem;font-size:11.5px;font-weight:700;color:var(--purple3);text-decoration:none;background:rgba(124,58,237,.15);padding:.3rem .8rem;border-radius:99px;transition:background .2s}
+  .repo-link:hover{background:rgba(124,58,237,.3)}
+
+  /* NEXT ACTIONS */
+  .actions-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.2rem;margin-top:1.5rem}
+  .action-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem}
+  .action-num{width:24px;height:24px;border-radius:50%;background:var(--purple);color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-bottom:.7rem}
+  .action-card h3{font-size:13px;font-weight:700;color:var(--text);margin-bottom:.6rem}
+  .action-card p{font-size:12.5px;color:var(--muted);line-height:1.65}
+
+  /* PAIN */
+  .pain-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.2rem;margin-top:1.5rem}
+  .pain-card{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--purple);border-radius:12px;padding:1.5rem}
+  .pain-card h3{font-size:13px;font-weight:700;color:var(--text);margin-bottom:.6rem}
+  .pain-card p{font-size:12.5px;color:var(--muted);line-height:1.65}
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar{width:6px;height:6px}
+  ::-webkit-scrollbar-track{background:var(--bg)}
+  ::-webkit-scrollbar-thumb{background:var(--border);border-radius:99px}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">IDC CAMPAIGN</div>
+    <a href="#overview">Overview</a>
+    <a href="#objectives">Objectives</a>
+    <a href="#pain">Pain / Trends</a>
+    <a href="#audience">Audience</a>
+    <a href="#messaging">Messaging</a>
+    <a href="#journey">Journey</a>
+    <a href="#assets">Assets & Timeline</a>
+    <a href="#calendar">Calendar</a>
+    <a href="#visuals">Visuals</a>
+    <a href="#measurement">Measurement</a>
+    <a href="#actions">Next Actions</a>
+  </div>
+</nav>
+
+<!-- OVERVIEW -->
+<section id="overview">
+  <div class="wrap">
+    <div class="eyebrow">Quantified by IDC</div>
+    <h1>IDC Global Whitepaper<br>Campaign</h1>
+    <p style="font-size:1.15rem;color:var(--purple3);font-weight:600;margin-top:.5rem;letter-spacing:-.01em">From Spreadsheets to Strategic Investment Decisions</p>
+
+    <div style="display:grid;grid-template-columns:1fr 280px;gap:2.5rem;margin-top:1.8rem;align-items:start">
+      <div>
+        <p class="hero-body" style="margin-top:0">The organizations delivering the strongest capital outcomes are not the ones with the biggest budgets — they are the ones making better decisions, faster. Most enterprises still rely on fragmented spreadsheets, disconnected data, and business cases built on subjectivity rather than evidence. IFS Copperleaf replaces that with a single source of truth: centralized planning data, enterprise-wide portfolio visibility, and value-based prioritization that makes every investment decision transparent, defensible, and strategically aligned. IDC's independent research puts hard numbers on the difference.</p>
+        <p style="font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:1.4rem;margin-bottom:1.4rem">Measured business impact. Strategic capital decisions.</p>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:1rem">
+          <div style="background:linear-gradient(135deg,var(--card),var(--card2));border:1px solid var(--border);border-radius:14px;padding:1.6rem 1.2rem;position:relative;overflow:hidden;height:110px;display:flex;flex-direction:column;justify-content:center">
+            <div style="position:absolute;inset:0;background:linear-gradient(135deg,var(--glow),transparent);opacity:.7"></div>
+            <span style="font-size:2rem;font-weight:800;color:var(--purple3);line-height:1;display:block;position:relative;white-space:nowrap">469%</span>
+            <div style="font-size:11px;color:var(--muted);margin-top:.5rem;letter-spacing:.03em;position:relative;line-height:1.4">3-Year ROI</div>
+          </div>
+          <div style="background:linear-gradient(135deg,var(--card),var(--card2));border:1px solid var(--border);border-radius:14px;padding:1.6rem 1.2rem;position:relative;overflow:hidden;height:110px;display:flex;flex-direction:column;justify-content:center">
+            <div style="position:absolute;inset:0;background:linear-gradient(135deg,var(--glow),transparent);opacity:.7"></div>
+            <span style="font-size:2rem;font-weight:800;color:var(--purple3);line-height:1;display:block;position:relative;white-space:nowrap">11 mo</span>
+            <div style="font-size:11px;color:var(--muted);margin-top:.5rem;letter-spacing:.03em;position:relative;line-height:1.4">Payback Period</div>
+          </div>
+          <div style="background:linear-gradient(135deg,var(--card),var(--card2));border:1px solid var(--border);border-radius:14px;padding:1.6rem 1.2rem;position:relative;overflow:hidden;height:110px;display:flex;flex-direction:column;justify-content:center">
+            <div style="position:absolute;inset:0;background:linear-gradient(135deg,var(--glow),transparent);opacity:.7"></div>
+            <span style="font-size:2rem;font-weight:800;color:var(--purple3);line-height:1;display:block;position:relative;white-space:nowrap">$17.5M</span>
+            <div style="font-size:11px;color:var(--muted);margin-top:.5rem;letter-spacing:.03em;position:relative;line-height:1.4">Avg Annual Benefits</div>
+          </div>
+          <div style="background:linear-gradient(135deg,var(--card),var(--card2));border:1px solid var(--border);border-radius:14px;padding:1.6rem 1.2rem;position:relative;overflow:hidden;height:110px;display:flex;flex-direction:column;justify-content:center">
+            <div style="position:absolute;inset:0;background:linear-gradient(135deg,var(--glow),transparent);opacity:.7"></div>
+            <span style="font-size:2rem;font-weight:800;color:var(--purple3);line-height:1;display:block;position:relative;white-space:nowrap">$742K</span>
+            <div style="font-size:11px;color:var(--muted);margin-top:.5rem;letter-spacing:.03em;position:relative;line-height:1.4">Additional Net Revenue</div>
+          </div>
+          <div style="background:linear-gradient(135deg,var(--card),var(--card2));border:1px solid var(--border);border-radius:14px;padding:1.6rem 1.2rem;position:relative;overflow:hidden;height:110px;display:flex;flex-direction:column;justify-content:center">
+            <div style="position:absolute;inset:0;background:linear-gradient(135deg,var(--glow),transparent);opacity:.7"></div>
+            <span style="font-size:2rem;font-weight:800;color:var(--purple3);line-height:1;display:block;position:relative;white-space:nowrap">55%</span>
+            <div style="font-size:11px;color:var(--muted);margin-top:.5rem;letter-spacing:.03em;position:relative;line-height:1.4">Faster Capital Reallocation</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pull quotes -->
+      <div style="display:flex;flex-direction:column;gap:1rem;padding-top:.25rem">
+        <div style="border-left:3px solid var(--purple);padding:.8rem 1rem;background:rgba(124,58,237,.07);border-radius:0 8px 8px 0">
+          <div style="font-size:12px;font-style:italic;color:var(--purple3);line-height:1.5">"single source of truth"</div>
+          <div style="font-size:10px;color:var(--muted);margin-top:.3rem;letter-spacing:.05em">IDC Research Finding</div>
+        </div>
+        <div style="border-left:3px solid var(--purple);padding:.8rem 1rem;background:rgba(124,58,237,.07);border-radius:0 8px 8px 0">
+          <div style="font-size:12px;font-style:italic;color:var(--purple3);line-height:1.5">"night-and-day difference"</div>
+          <div style="font-size:10px;color:var(--muted);margin-top:.3rem;letter-spacing:.05em">Customer Outcome</div>
+        </div>
+        <div style="border-left:3px solid var(--purple);padding:.8rem 1rem;background:rgba(124,58,237,.07);border-radius:0 8px 8px 0">
+          <div style="font-size:12px;font-style:italic;color:var(--purple3);line-height:1.5">"who shouted the loudest"</div>
+          <div style="font-size:10px;color:var(--muted);margin-top:.3rem;letter-spacing:.05em">The Old Way</div>
+        </div>
+        <div style="border-left:3px solid var(--purple);padding:.8rem 1rem;background:rgba(124,58,237,.07);border-radius:0 8px 8px 0">
+          <div style="font-size:12px;font-style:italic;color:var(--purple3);line-height:1.5">"the most strategic levers"</div>
+          <div style="font-size:10px;color:var(--muted);margin-top:.3rem;letter-spacing:.05em">Strategic Context</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div style="margin-top:3rem;height:1px;background:linear-gradient(to right,var(--purple),transparent);opacity:.5"></div>
+  </div>
+</section>
+
+<!-- OBJECTIVES -->
+<section id="objectives">
+  <div class="wrap">
+    <div class="section-sub">Campaign Goals</div>
+    <h2 class="section-title">Objectives</h2>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-tag">Brand Awareness</div>
+        <h3>Third-Party Validated Authority</h3>
+        <p>Establish IFS Copperleaf as the authoritative platform for data-driven, value-based capital planning — using third-party IDC validation to build credibility with executive and strategic finance audiences across target sub-verticals globally.</p>
+      </div>
+      <div class="card">
+        <div class="card-tag">Lead Generation</div>
+        <h3>Qualified Downloads & Pipeline</h3>
+        <p>Drive qualified downloads of the IDC White Paper through gated channels (LinkedIn, Demandbase, IQPC) and content syndication — converting engaged audiences into identified prospects for regional nurture and ABM follow-through.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PAIN / TRENDS -->
+<section id="pain">
+  <div class="wrap">
+    <div class="section-sub">Market Pressures Driving Urgency</div>
+    <h2 class="section-title">Pain / Trends</h2>
+    <div class="pain-cards">
+      <div class="pain-card">
+        <h3>Siloed Investment Data</h3>
+        <p>Organizations cannot see where capital delivers the most value when investment data is fragmented across systems and teams. Portfolio-level insight is impossible without integration.</p>
+      </div>
+      <div class="pain-card">
+        <h3>Manual, Reactive Planning</h3>
+        <p>Spreadsheet-driven processes limit agility and slow critical decision-making. When capital cycles move fast, manual planning creates dangerous blind spots and delayed responses.</p>
+      </div>
+      <div class="pain-card">
+        <h3>ROI Accountability Pressure</h3>
+        <p>Executives and regulators demand defensible, evidence-based justification for every capital investment. The ability to prove value has become a strategic and compliance imperative.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AUDIENCE -->
+<section id="audience">
+  <div class="wrap">
+    <div class="section-sub">Target Audience</div>
+    <h2 class="section-title">Audience</h2>
+    <div class="aud-grid">
+      <div class="aud-block">
+        <h4>Sub-Verticals</h4>
+        <ul>
+          <li>Energy & Utilities</li>
+          <li>Oil & Gas</li>
+          <li>Transportation & Infrastructure</li>
+          <li>Water & Wastewater</li>
+        </ul>
+      </div>
+      <div class="aud-block">
+        <h4>Solution Alignment</h4>
+        <p>IFS Copperleaf AIP — Asset Investment Planning</p>
+        <h4 style="margin-top:1.2rem">Regional Relevance</h4>
+        <ul>
+          <li>Europe</li>
+          <li>APJMEA</li>
+          <li>AMER</li>
+        </ul>
+      </div>
+      <div class="aud-block" style="grid-column:span 2">
+        <h4>Target Personas</h4>
+        <ul style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.3rem .5rem">
+          <li>EVP / SVP</li>
+          <li>Chief Strategy Officer (CSO)</li>
+          <li>Chief Financial Officer (CFO)</li>
+          <li>EVP Finance</li>
+          <li>Corporate Strategy</li>
+          <li>Corporate Development</li>
+          <li>Strategic Planning</li>
+          <li>Enterprise Transformation</li>
+          <li>Capital Planning & Investments</li>
+          <li>VP FP&A</li>
+          <li>Chief Operating Officer (COO)</li>
+          <li>EVP Operations</li>
+          <li>Chief Transformation Officer</li>
+          <li>Chief Innovation Officer</li>
+          <li>Chief Digital Officer (CDO)</li>
+          <li>Chief Sustainability Officer</li>
+          <li>EVP/SVP ESG & Corporate Responsibility</li>
+          <li>VP Sustainability & Resilience</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MESSAGING -->
+<section id="messaging">
+  <div class="wrap">
+    <div class="section-sub">Top 3 Campaign Messages</div>
+    <h2 class="section-title">Messaging</h2>
+    <div class="msg-cards">
+      <div class="msg-card">
+        <div class="msg-num">Message 01</div>
+        <div class="msg-label">Strategic Positioning</div>
+        <p>Move beyond spreadsheets to value-based, defensible capital planning — proven to deliver rapid ROI and higher portfolio value.</p>
+      </div>
+      <div class="msg-card">
+        <div class="msg-num">Message 02</div>
+        <div class="msg-label">Proven Business Impact</div>
+        <p>469% three-year ROI with an 11-month payback, delivering $17.5M in average annual benefits and $742K in additional annual net revenue.</p>
+      </div>
+      <div class="msg-card">
+        <div class="msg-num">Message 03</div>
+        <div class="msg-label">Operational Lift</div>
+        <p>17% more efficient capital planning teams, 55% faster capital reallocation, and 18% more productive asset managers.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOURNEY -->
+<section id="journey">
+  <div class="wrap">
+    <div class="section-sub">Customer Journey Map</div>
+    <h2 class="section-title">Journey</h2>
+    <div class="funnel-grid">
+      <div class="funnel-card">
+        <div class="funnel-stage">TOFU</div>
+        <div class="funnel-title">Awareness</div>
+        <div class="funnel-sub">Broad Reach & Narrative</div>
+        <ul>
+          <li>IDC research and strategic capital planning narrative</li>
+          <li>LinkedIn carousel and sponsored content</li>
+          <li>Demandbase programmatic display</li>
+          <li>Content syndication via IQPC</li>
+          <li>Blog series and thought leadership articles</li>
+        </ul>
+      </div>
+      <div class="funnel-card">
+        <div class="funnel-stage">MOFU</div>
+        <div class="funnel-title">Engagement</div>
+        <div class="funnel-sub">Gated Entry & Nurture</div>
+        <ul>
+          <li>Primary entry: gated LinkedIn, Demandbase, intent + account lists</li>
+          <li>Marketo nurture stream — 3-month run</li>
+          <li>Drive audiences to IDC asset</li>
+          <li>IDC offer reused within nurture flow only</li>
+          <li>Objective: sustained engagement, education, regional handoff</li>
+        </ul>
+      </div>
+      <div class="funnel-card">
+        <div class="funnel-stage">BOFU</div>
+        <div class="funnel-title">Conversion</div>
+        <div class="funnel-sub">Regional ABM & Pipeline</div>
+        <ul>
+          <li>Regional teams run 1:1 / 1:few ABM plays</li>
+          <li>LinkedIn, email, SDR / sales outreach</li>
+          <li>IDC report used as proof point</li>
+          <li>Workshop and demo invitations added</li>
+          <li>Objective: qualified meetings and pipeline opportunities</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ASSETS & TIMELINE -->
+<section id="assets">
+  <div class="wrap">
+    <div class="section-sub">Campaign Assets</div>
+    <h2 class="section-title">Assets & Timeline</h2>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Asset</th>
+            <th>Timeline</th>
+            <th>Format</th>
+            <th>Goal / KPI</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>IDC White Paper: Strategic Capital Decisions (Full Report) — <span style="color:var(--purple3);font-weight:700">HERO</span></td>
+            <td>1 Jan – 31 Dec</td>
+            <td style="font-size:12px">White paper + gated landing page; primary CTA across LinkedIn, Demandbase, IQPC</td>
+            <td><span class="kpi-pill">100 downloads</span></td>
+          </tr>
+          <tr>
+            <td>3rd-Party Content Syndication (IQPC)</td>
+            <td>15 Dec – 15 Feb</td>
+            <td>Gated white paper</td>
+            <td><span class="kpi-pill">100 leads</span></td>
+          </tr>
+          <tr>
+            <td>Always-On Paid: LinkedIn + Demandbase</td>
+            <td>1 Jan – 31 Dec</td>
+            <td style="font-size:12px">Sponsored content + Demandbase display; retarget to full report gated</td>
+            <td><span class="kpi-pill">1,000 website visits</span></td>
+          </tr>
+          <tr>
+            <td>Landing Page, IDC Business Value Snapshot & IDC Executive Brief</td>
+            <td>1 Jan – 31 Dec</td>
+            <td>Landing pages</td>
+            <td><span class="kpi-pill">2,500+ sessions/mo</span></td>
+          </tr>
+          <tr>
+            <td>Marketo MOFU Nurture (12 months)</td>
+            <td>1 Jan – 31 Dec</td>
+            <td>Email nurture stream — IDC blogs and thought leadership</td>
+            <td><span class="kpi-pill">60% email CTR</span></td>
+          </tr>
+          <tr>
+            <td>Blog Series (6 blogs)</td>
+            <td>Phase 3 — 1/month</td>
+            <td>Supports nurture + paid</td>
+            <td><span class="kpi-pill">1,500 total visits</span></td>
+          </tr>
+          <tr>
+            <td>Thought Leadership Series (4 articles)</td>
+            <td>Phase 3 — 1/month</td>
+            <td>Supports nurture + paid</td>
+            <td><span class="kpi-pill">1,500 total visits</span></td>
+          </tr>
+          <tr>
+            <td>Folloze Landing Page</td>
+            <td>Feb – 31 Dec</td>
+            <td>Landing page with mild customization</td>
+            <td><span class="kpi-pill">Website visits</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- CALENDAR -->
+<section id="calendar">
+  <div class="wrap">
+    <div class="section-sub">Content & Activation Schedule</div>
+    <h2 class="section-title">Calendar</h2>
+    <div class="cal-list">
+      <div class="cal-row"><div class="cal-date">Oct 2025</div><div><div class="cal-title">IDC Carousel — Campaign Launch</div></div><div class="cal-channel">LinkedIn</div></div>
+      <div class="cal-row"><div class="cal-date">Nov 2025</div><div><div class="cal-title">Blog 1 — Top 10 Insights from IDC's Business Value Research on IFS Copperleaf</div></div><div class="cal-channel">WordPress & LinkedIn</div></div>
+      <div class="cal-row"><div class="cal-date">Nov 2025 – Dec 2026</div><div><div class="cal-title">Paid Social — Website Visits & Conversions (always-on)</div></div><div class="cal-channel">LinkedIn</div></div>
+      <div class="cal-row"><div class="cal-date">Nov 2025 – Dec 2026</div><div><div class="cal-title">Programmatic Display (always-on)</div></div><div class="cal-channel">Demandbase</div></div>
+      <div class="cal-row"><div class="cal-date">Dec 2025</div><div><div class="cal-title">Blog 2 — Breaking Down IDC's 469% ROI Finding: What the Numbers Really Mean</div></div><div class="cal-channel">WordPress & LinkedIn</div></div>
+      <div class="cal-row"><div class="cal-date">21 Jan 2026</div><div><div class="cal-title">TL1 — Scenario Modelling Is the New Strategic Advantage in Capital Allocation</div></div><div class="cal-channel">WordPress & LinkedIn</div></div>
+      <div class="cal-row"><div class="cal-date">4 Feb 2026</div><div><div class="cal-title">Blog 3 — The Hidden Costs of Manual Capital Planning</div></div><div class="cal-channel">WordPress & LinkedIn</div></div>
+      <div class="cal-row"><div class="cal-date">17 Feb 2026</div><div><div class="cal-title">TL2 — The Era of Evidence-Based Capital Planning: Why Gut Feel Isn't Good Enough Anymore</div></div><div class="cal-channel">WordPress & LinkedIn</div></div>
+      <div class="cal-row"><div class="cal-date">4 Mar 2026</div><div><div class="cal-title">Blog 4 — How Value Models Transform Capital Decision-Making</div></div><div class="cal-channel">WordPress & LinkedIn</div></div>
+      <div class="cal-row"><div class="cal-date">18 Mar 2026</div><div><div class="cal-title">TL3 — The Future of Capital Planning Data Architecture: From Silos to a Single Source of Truth</div></div><div class="cal-channel">WordPress & LinkedIn</div></div>
+      <div class="cal-row"><div class="cal-date">10 Apr 2026</div><div><div class="cal-title">Blog 5 — What IDC Learned from Organizations Transforming Their Capital Planning</div></div><div class="cal-channel">WordPress & LinkedIn</div></div>
+      <div class="cal-row"><div class="cal-date">24 Apr 2026</div><div><div class="cal-title">TL4 — Why Capital Planning Has Become a Board-Level Priority</div></div><div class="cal-channel">WordPress & LinkedIn</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- VISUALS -->
+<section id="visuals">
+  <div class="wrap">
+    <div class="section-sub">Visual Messaging & Creative Direction</div>
+    <h2 class="section-title">Visuals</h2>
+
+    <div class="asset-header">
+      <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--purple2);margin-bottom:.5rem">Hero Card — Proof Points</div>
+      <p style="font-size:12px;color:var(--muted);margin-bottom:.8rem">Prominently featured across LinkedIn ads, Demandbase display, landing pages, and executive briefs.</p>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1rem">
+        <span class="kpi-pill">$17.5M in Value Delivered</span>
+        <span class="kpi-pill">469% 3-Year ROI</span>
+        <span class="kpi-pill">11 mo Payback Period</span>
+      </div>
+      <div class="cta-line">Primary CTA: Download the Free Report</div>
+      <div class="hero-copy">
+        <p><strong style="color:var(--text)">Headline:</strong> Decide with confidence. Deliver with certainty.</p>
+        <p><strong style="color:var(--text)">Sub-Copy 1:</strong> IDC quantifies how IFS Copperleaf enables resilient, high-value capital decisions.</p>
+        <p><strong style="color:var(--text)">Sub-Copy 2:</strong> See how IFS Copperleaf delivers measurable results for leading infrastructure organizations.</p>
+      </div>
+    </div>
+
+    <div class="section-sub" style="margin-top:2rem">Asset Repository</div>
+    <div class="repo-grid">
+      <div class="repo-card">
+        <div class="repo-title">Email Signature Banners</div>
+        <div class="repo-desc">Employee promotion and campaign visibility in outbound communication.</div>
+        <div class="repo-usage">Use for: outbound email promotion</div>
+        <a class="repo-link" href="https://ifs.sharepoint.com/:f:/r/sites/CPLF_-marketing/Campaigns/2026/Always%20On/IDC%20Report/Design/Email%20Signatures?csf=1&web=1&e=GXit9V" target="_blank">↗ Open in SharePoint</a>
+      </div>
+      <div class="repo-card">
+        <div class="repo-title">Demandbase Banners</div>
+        <div class="repo-desc">Account-based display and programmatic campaign activation.</div>
+        <div class="repo-usage">Use for: ABM display campaigns</div>
+        <a class="repo-link" href="https://ifs.sharepoint.com/:f:/r/sites/CPLF_-marketing/Campaigns/2026/Always%20On/IDC%20Report/Design/Demandbase%20Banners?csf=1&web=1&e=Xeh5bV" target="_blank">↗ Open in SharePoint</a>
+      </div>
+      <div class="repo-card">
+        <div class="repo-title">Landing Page Banners</div>
+        <div class="repo-desc">Landing page headers and hero creative.</div>
+        <div class="repo-usage">Use for: LP headers and hero zones</div>
+        <a class="repo-link" href="https://ifs.sharepoint.com/:f:/r/sites/CPLF_-marketing/Campaigns/2026/Always%20On/IDC%20Report/Landing%20Pages/Landing%20Page%20Banners?csf=1&web=1&e=4bWoKT" target="_blank">↗ Open in SharePoint</a>
+      </div>
+      <div class="repo-card">
+        <div class="repo-title">LinkedIn Paid Banners</div>
+        <div class="repo-desc">Paid social campaign creative and sponsored content.</div>
+        <div class="repo-usage">Use for: paid LinkedIn campaigns</div>
+        <a class="repo-link" href="https://ifs.sharepoint.com/:f:/r/sites/CPLF_-marketing/Campaigns/2026/Always%20On/IDC%20Report/LinkedIn/Paid?csf=1&web=1&e=pepolB" target="_blank">↗ Open in SharePoint</a>
+      </div>
+      <div class="repo-card">
+        <div class="repo-title">LinkedIn Organic Banners</div>
+        <div class="repo-desc">Organic campaign amplification and social publishing.</div>
+        <div class="repo-usage">Use for: organic social publishing</div>
+        <a class="repo-link" href="https://ifs.sharepoint.com/:f:/r/sites/CPLF_-marketing/Campaigns/2026/Always%20On/IDC%20Report/LinkedIn/Organic?csf=1&web=1&e=O7zmIr" target="_blank">↗ Open in SharePoint</a>
+      </div>
+      <div class="repo-card">
+        <div class="repo-title">Blog Posts</div>
+        <div class="repo-desc">IDC campaign blog content repository.</div>
+        <div class="repo-usage">Use for: content publication and nurture</div>
+        <a class="repo-link" href="https://ifs.sharepoint.com/:f:/r/sites/CPLF_-marketing/Campaigns/2026/Always%20On/IDC%20Report/Blog%20Posts?csf=1&web=1&e=RBcyIN" target="_blank">↗ Open in SharePoint</a>
+      </div>
+      <div class="repo-card">
+        <div class="repo-title">Thought Leadership Articles</div>
+        <div class="repo-desc">Long-form content supporting nurture and executive positioning.</div>
+        <div class="repo-usage">Use for: executive nurture and LinkedIn</div>
+        <a class="repo-link" href="https://ifs.sharepoint.com/:f:/r/sites/CPLF_-marketing/Campaigns/2026/Always%20On/IDC%20Report/Thought%20Leadership%20Articles?csf=1&web=1&e=zE1ftB" target="_blank">↗ Open in SharePoint</a>
+      </div>
+      <div class="repo-card">
+        <div class="repo-title">Marketo Emailers</div>
+        <div class="repo-desc">Nurture email assets and email production repository.</div>
+        <div class="repo-usage">Use for: MOFU nurture email sequence</div>
+        <a class="repo-link" href="https://ifs.sharepoint.com/:f:/r/sites/CPLF_-marketing/Campaigns/2026/Always%20On/IDC%20Report/Marketo%20Emailers?csf=1&web=1&e=5N5Jic" target="_blank">↗ Open in SharePoint</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MEASUREMENT -->
+<section id="measurement">
+  <div class="wrap">
+    <div class="section-sub">Measurement Framework</div>
+    <h2 class="section-title">Measurement</h2>
+    <div class="metric-groups">
+      <div class="metric-group">
+        <div class="metric-group-title">Awareness</div>
+        <div class="metric-row"><div><div class="metric-name">LinkedIn Impressions</div><div class="metric-note">Track reach</div></div></div>
+        <div class="metric-row"><div><div class="metric-name">Demandbase Display Reach</div><div class="metric-note">Account coverage</div></div></div>
+        <div class="metric-row"><div><div class="metric-name">Share of Voice</div><div class="metric-note">Benchmark vs. peers</div></div></div>
+        <div class="metric-row"><div><div class="metric-name">IQPC Syndication Reach</div><div class="metric-note">3rd-party audience</div></div></div>
+      </div>
+      <div class="metric-group">
+        <div class="metric-group-title">Traffic</div>
+        <div class="metric-row"><div><div class="metric-name">Website Visits (Paid)</div><div class="metric-note">Track reach</div></div><span class="metric-goal">1,000</span></div>
+        <div class="metric-row"><div><div class="metric-name">Landing Page Sessions</div><div class="metric-note">Volume metric</div></div><span class="metric-goal">2,500+/mo</span></div>
+        <div class="metric-row"><div><div class="metric-name">Blog + TL Traffic</div><div class="metric-note">Content reach</div></div><span class="metric-goal">3,000 total</span></div>
+        <div class="metric-row"><div><div class="metric-name">Folloze Page Visits</div><div class="metric-note">Track engagement</div></div></div>
+      </div>
+      <div class="metric-group">
+        <div class="metric-group-title">Content Engagement</div>
+        <div class="metric-row"><div><div class="metric-name">White Paper Downloads</div><div class="metric-note">Primary conversion</div></div><span class="metric-goal">100</span></div>
+        <div class="metric-row"><div><div class="metric-name">Time on Page</div><div class="metric-note">Quality signal</div></div></div>
+        <div class="metric-row"><div><div class="metric-name">Scroll Depth</div><div class="metric-note">Content resonance</div></div></div>
+        <div class="metric-row"><div><div class="metric-name">Asset Return Visits</div><div class="metric-note">Intent signal</div></div></div>
+      </div>
+      <div class="metric-group">
+        <div class="metric-group-title">Lead Generation</div>
+        <div class="metric-row"><div><div class="metric-name">IQPC Leads</div><div class="metric-note">Syndication conversion</div></div><span class="metric-goal">100</span></div>
+        <div class="metric-row"><div><div class="metric-name">Gated Form Fills</div><div class="metric-note">LinkedIn + LP</div></div></div>
+        <div class="metric-row"><div><div class="metric-name">Cost Per Lead</div><div class="metric-note">Efficiency metric</div></div></div>
+        <div class="metric-row"><div><div class="metric-name">Lead Quality Score</div><div class="metric-note">Persona match %</div></div></div>
+      </div>
+      <div class="metric-group">
+        <div class="metric-group-title">Nurture Engagement</div>
+        <div class="metric-row"><div><div class="metric-name">Email Click-Through Rate</div><div class="metric-note">Primary email KPI</div></div><span class="metric-goal">60%</span></div>
+        <div class="metric-row"><div><div class="metric-name">Marketo Stream Progression</div><div class="metric-note">Stage movement</div></div></div>
+        <div class="metric-row"><div><div class="metric-name">Email Open Rate</div><div class="metric-note">Subject line test</div></div></div>
+        <div class="metric-row"><div><div class="metric-name">Nurture Exit Rate</div><div class="metric-note">Unsubscribes</div></div></div>
+      </div>
+      <div class="metric-group">
+        <div class="metric-group-title">Pipeline & Resonance</div>
+        <div class="metric-row"><div><div class="metric-name">Qualified Meetings (ABM)</div><div class="metric-note">BOFU goal</div></div></div>
+        <div class="metric-row"><div><div class="metric-name">Opportunities Influenced</div><div class="metric-note">SDR + sales</div></div></div>
+        <div class="metric-row"><div><div class="metric-name">Persona Engagement Rate</div><div class="metric-note">By role</div></div></div>
+        <div class="metric-row"><div><div class="metric-name">Regional Performance</div><div class="metric-note">EUR / APJMEA / AMER</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEXT ACTIONS -->
+<section id="actions">
+  <div class="wrap">
+    <div class="section-sub">Execution Checklist</div>
+    <h2 class="section-title">Next Actions</h2>
+    <div class="actions-grid">
+      <div class="action-card"><div class="action-num">1</div><h3>Campaign Launch</h3><p>Confirm IDC White Paper gated landing page is live. Activate LinkedIn carousel and initial paid social campaigns. Verify tracking pixels, UTM parameters, and Demandbase account lists are in place.</p></div>
+      <div class="action-card"><div class="action-num">2</div><h3>Content Production</h3><p>Brief Blog 1 and Blog 2 with IDC findings integration. Brief TL1 for Jan 21 publish. Confirm IDC Business Value Snapshot and Executive Brief design are finalized for LP deployment.</p></div>
+      <div class="action-card"><div class="action-num">3</div><h3>Paid Activation</h3><p>Set up LinkedIn Sponsored Content targeting by persona and region. Configure Demandbase display campaign with intent + account list targeting. Launch IQPC content syndication by Dec 15. Activate retargeting to gated full report.</p></div>
+      <div class="action-card"><div class="action-num">4</div><h3>Nurture Setup</h3><p>Build Marketo MOFU nurture stream (12-month cadence). Load IDC blog and thought leadership content into email sequence. QA all email flows, unsubscribe logic, and program enrollment triggers. Set 60% CTR as primary email KPI.</p></div>
+      <div class="action-card"><div class="action-num">5</div><h3>Regional Handoff</h3><p>Brief Europe, APJMEA, and AMER regional teams on BOFU ABM playbook. Share IDC report as proof point asset. Distribute workshop and demo invitation templates. Align on SDR outreach sequence and account list priorities per region.</p></div>
+      <div class="action-card"><div class="action-num">6</div><h3>Folloze Setup</h3><p>Build Folloze landing page with IDC campaign assets and mild account-based customization. Schedule for February launch. Configure tracking and connect to Marketo for lead capture and nurture enrollment.</p></div>
+      <div class="action-card"><div class="action-num">7</div><h3>Reporting Cadence</h3><p>Establish weekly paid performance reporting (LinkedIn + Demandbase). Monthly campaign health report covering traffic, downloads, nurture CTR, and leads. Quarterly pipeline review with regional teams. Semi-annual message resonance review by persona and channel.</p></div>
+    </div>
+  </div>
+  <div style="text-align:center;padding:3rem 0 1rem;color:var(--border);font-size:11px;letter-spacing:.08em;text-transform:uppercase">IDC Global Whitepaper Campaign · IFS Copperleaf · 2026</div>
+</section>
+
+</body>
+</html>
